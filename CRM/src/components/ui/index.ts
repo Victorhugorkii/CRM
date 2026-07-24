@@ -1,4 +1,4 @@
-export * from './button'
-export * from './card'
-export * from './badge'
-export * from './input'
+export { Button, buttonVariants } from './button'
+export { Badge,  badgeVariants  } from './badge'
+export { Card, CardHeader, CardTitle, CardDescription, CardContent } from './card'
+export { Input } from './input'

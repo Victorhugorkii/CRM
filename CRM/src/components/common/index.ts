@@ -1,1 +1,2 @@
-export { default as StatCard } from './StatCard'
+export { default as NotFound } from './NotFound'
+export { default as PlaceholderPage } from './PlaceholderPage'

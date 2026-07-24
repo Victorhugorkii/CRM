@@ -3,13 +3,18 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useUIStore } from '@/store/uiStore'
 
 const NAV_ITEMS = [
-  { label: 'Dashboard', icon: LayoutGrid, to: '/dashboard' },
-  { label: 'Clientes', icon: Users, to: '/clientes' },
-  { label: 'Relatórios', icon: BarChart3, to: '/relatorios' },
-  { label: 'Configurações', icon: Settings, to: '/settings' },
+  { label: 'Dashboard',     icon: LayoutGrid, to: '/dashboard' },
+  { label: 'Clientes',      icon: Users,      to: '/clientes'  },
+  { label: 'Relatórios',    icon: BarChart3,   to: '/relatorios' },
+  { label: 'Configurações', icon: Settings,    to: '/settings'  },
 ]
 
-export default function Sidebar() {
+/**
+ * Sidebar — navegação lateral recolhível.
+ * Responsabilidade: navegação + identidade visual do shell.
+ * Estado (aberto/fechado) gerenciado pelo uiStore.
+ */
+export function Sidebar() {
   const navigate = useNavigate()
   const { isSidebarOpen } = useUIStore()
 
@@ -19,11 +24,9 @@ export default function Sidebar() {
         isSidebarOpen ? 'w-56' : 'w-[60px]'
       }`}
     >
-      {/* Logo */}
+      {/* Topo: logo + navegação */}
       <div className="flex flex-col gap-5 py-5">
-        <div
-          className={`flex items-center px-4 ${isSidebarOpen ? 'gap-2.5' : 'justify-center'}`}
-        >
+        <div className={`flex items-center px-4 ${isSidebarOpen ? 'gap-2.5' : 'justify-center'}`}>
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-black shadow-sm">
             <Command className="h-[15px] w-[15px]" />
           </div>
@@ -35,10 +38,8 @@ export default function Sidebar() {
           )}
         </div>
 
-        {/* Divider */}
         <div className="mx-3 h-px bg-zinc-800/60" />
 
-        {/* Nav */}
         <nav className="flex flex-col gap-0.5 px-2">
           {NAV_ITEMS.map((item) => (
             <NavLink
@@ -50,16 +51,14 @@ export default function Sidebar() {
                   isSidebarOpen ? 'gap-3' : 'justify-center'
                 } ${
                   isActive
-                    ? 'bg-white/[0.08] text-white shadow-sm'
+                    ? 'bg-white/[0.08] text-white'
                     : 'text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
-                  <item.icon
-                    className={`h-4 w-4 shrink-0 transition-colors ${isActive ? 'text-white' : ''}`}
-                  />
+                  <item.icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-white' : ''}`} />
                   {isSidebarOpen && <span className="truncate">{item.label}</span>}
                 </>
               )}
@@ -68,7 +67,7 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* Logout */}
+      {/* Rodapé: logout */}
       <div className="px-2 pb-5">
         <div className="mx-1 mb-3 h-px bg-zinc-800/60" />
         <button
