@@ -1,25 +1,23 @@
 import { Outlet } from 'react-router-dom'
-import { Sidebar } from '@/components/layout'
+import { Sidebar, Header } from '@/components/layout'
 
 /**
- * RootLayout
- * Layout raiz que envolve toda a aplicação autenticada
- * Sidebar fica fixa na lateral esquerda, conteúdo à direita
+ * RootLayout — layout autenticado principal
+ * Sidebar ocupa espaço real (não overlay). Header fixo no topo do conteúdo.
  */
-function RootLayout() {
+export default function RootLayout() {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-slate-950 text-slate-100">
-      {/* Sidebar fixa na lateral */}
-      <div className="w-72 shrink-0 border-r border-white/10">
-        <Sidebar />
-      </div>
+    <div className="flex h-screen w-full overflow-hidden bg-[#09090b]">
+      {/* Sidebar fixa à esquerda */}
+      <Sidebar />
 
-      {/* Conteúdo principal */}
-      <main className="flex-1 overflow-y-auto">
-        <Outlet />
-      </main>
+      {/* Coluna direita: header + conteúdo scrollável */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <Header />
+        <main className="flex-1 overflow-y-auto scrollbar-fine">
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }
-
-export default RootLayout

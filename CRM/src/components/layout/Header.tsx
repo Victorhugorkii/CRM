@@ -1,20 +1,49 @@
-function Header() {
+import { PanelLeftClose, PanelLeftOpen, Bell } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { useUIStore } from '@/store/uiStore'
+
+const PAGE_TITLES: Record<string, string> = {
+  '/dashboard': 'Dashboard',
+  '/clientes': 'Clientes',
+  '/relatorios': 'Relatórios',
+  '/settings': 'Configurações',
+}
+
+export default function Header() {
+  const { isSidebarOpen, toggleSidebar } = useUIStore()
+  const { pathname } = useLocation()
+  const title = PAGE_TITLES[pathname] ?? 'NeverX'
+
   return (
-    <header className="mb-5 flex flex-col gap-3 rounded-[20px] border border-white/10 bg-slate-950/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-      <div>
-        <p className="text-sm text-slate-400">Dashboard comercial</p>
-        <h2 className="text-xl font-semibold text-white">Bem-vindo de volta, Lucas</h2>
-      </div>
+    <header className="flex h-[52px] shrink-0 items-center justify-between border-b border-zinc-800/80 bg-[#09090b] px-4">
+      {/* Left: toggle + page title */}
       <div className="flex items-center gap-3">
-        <div className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-sm text-slate-300">
-          Q3 • 2026
-        </div>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-semibold text-slate-950">
+        <button
+          onClick={toggleSidebar}
+          aria-label={isSidebarOpen ? 'Recolher menu' : 'Expandir menu'}
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-zinc-200"
+        >
+          {isSidebarOpen ? (
+            <PanelLeftClose className="h-4 w-4" />
+          ) : (
+            <PanelLeftOpen className="h-4 w-4" />
+          )}
+        </button>
+
+        <div className="h-4 w-px bg-zinc-800" />
+
+        <span className="text-sm font-semibold text-white">{title}</span>
+      </div>
+
+      {/* Right: actions + avatar */}
+      <div className="flex items-center gap-1.5">
+        <button className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-zinc-200">
+          <Bell className="h-4 w-4" />
+        </button>
+        <div className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-white text-[11px] font-semibold text-black">
           L
         </div>
       </div>
     </header>
   )
 }
-
-export default Header

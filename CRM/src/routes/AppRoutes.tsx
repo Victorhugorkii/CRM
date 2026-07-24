@@ -1,14 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Auth } from '@/features/auth'
+import { Dashboard } from '@/features/dashboard'
+import { ClientManagement } from '@/features/clients'
 import { RootLayout } from '@/layouts'
-import { DashboardPage, ClientsPage, NotFoundPage } from '@/pages'
-
-/**
- * AppRoutes
- * Configuração de rotas principais da aplicação
- * - / : Login (sem sidebar)
- * - /dashboard, /clientes, etc : Com RootLayout (sidebar fixa)
- */
+import NotFound from '@/components/common/NotFound'
 
 const router = createBrowserRouter([
   {
@@ -18,34 +13,44 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
-    errorElement: <NotFoundPage />,
+    errorElement: <NotFound />,
     children: [
       {
         path: 'dashboard',
-        element: <DashboardPage />,
+        element: <Dashboard />,
       },
       {
         path: 'clientes',
-        element: <ClientsPage />,
+        element: <ClientManagement />,
       },
       {
         path: 'relatorios',
-        element: <div className="min-h-screen bg-slate-950 px-6 py-8"><p className="text-white">Página de Relatórios - em desenvolvimento</p></div>,
+        element: <PlaceholderPage title="Relatórios" description="Análises e relatórios detalhados em breve." />,
       },
       {
         path: 'settings',
-        element: <div className="min-h-screen bg-slate-950 px-6 py-8"><p className="text-white">Configurações - em desenvolvimento</p></div>,
+        element: <PlaceholderPage title="Configurações" description="Preferências e configurações da conta." />,
       },
       {
         path: '*',
-        element: <NotFoundPage />,
+        element: <NotFound />,
       },
     ],
   },
 ])
 
-function AppRoutes() {
-  return <RouterProvider router={router} />
+function PlaceholderPage({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="flex h-full min-h-[60vh] flex-col items-center justify-center gap-3 p-8 text-center">
+      <h2 className="text-xl font-semibold text-white">{title}</h2>
+      <p className="text-sm text-zinc-500">{description}</p>
+      <span className="mt-2 rounded-md border border-zinc-800 bg-zinc-900/60 px-3 py-1 text-xs font-medium text-zinc-500">
+        Em desenvolvimento
+      </span>
+    </div>
+  )
 }
 
-export default AppRoutes
+export default function AppRoutes() {
+  return <RouterProvider router={router} />
+}
