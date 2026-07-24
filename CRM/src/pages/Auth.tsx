@@ -445,10 +445,9 @@ export default function Auth() {
       transition={{ duration: 1.5, ease: 'easeInOut' }}
       className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat p-4 font-sans text-zinc-100"
       style={{
-        backgroundColor: '#000000d0', // Fundo preto puro base
-        backgroundBlendMode: 'luminosity', // TIRA AS CORES da imagem (remove o verde/amarelo)
-        backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0,0,0, 0.95)), url('/Background.png')", // Corrigido path removendo o /public
+        backgroundColor: '#000000d0',
+        backgroundBlendMode: 'luminosity',
+        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0,0,0, 0.95)), url('/Background.png')",
       }}
     >
       <motion.div

@@ -1,7 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Auth } from '@/features/auth'
-import { MainLayout } from '@/layouts'
-import { HomePage, NotFoundPage } from '@/pages'
+import { RootLayout } from '@/layouts'
+import { DashboardPage, ClientsPage, NotFoundPage } from '@/pages'
+
+/**
+ * AppRoutes
+ * Configuração de rotas principais da aplicação
+ * - / : Login (sem sidebar)
+ * - /dashboard, /clientes, etc : Com RootLayout (sidebar fixa)
+ */
 
 const router = createBrowserRouter([
   {
@@ -9,13 +16,25 @@ const router = createBrowserRouter([
     element: <Auth />,
   },
   {
-    path: '/app',
-    element: <MainLayout />,
+    path: '/',
+    element: <RootLayout />,
     errorElement: <NotFoundPage />,
     children: [
       {
-        index: true,
-        element: <HomePage />,
+        path: 'dashboard',
+        element: <DashboardPage />,
+      },
+      {
+        path: 'clientes',
+        element: <ClientsPage />,
+      },
+      {
+        path: 'relatorios',
+        element: <div className="min-h-screen bg-slate-950 px-6 py-8"><p className="text-white">Página de Relatórios - em desenvolvimento</p></div>,
+      },
+      {
+        path: 'settings',
+        element: <div className="min-h-screen bg-slate-950 px-6 py-8"><p className="text-white">Configurações - em desenvolvimento</p></div>,
       },
       {
         path: '*',
